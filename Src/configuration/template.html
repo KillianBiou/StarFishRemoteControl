@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="form">
+        <form action="/changeParameters" method="post">
+            <div class="content">
+                <h1>Paramètres du StarFish</h1>
+                <hr>
+                <label>Portée (m)<input type="number" min="1" max="200" name="range" value="{RANGE}"></label>
+                <label>Velocité du son (m/s)<input type="number" min="1200" max="2000" name="vos" value="{VOS}"></label>
+                <label>Echantillons<input type="number" min="100" max="2047" name="samples" value="{SAMPLES}"></label>
+            </div>
+            <div class="content">
+                <h1>Paramètres de visualisation</h1>
+                <hr>
+                <label>Gain<input type="number" min="0" max="100" name="gain" value="{GAIN}"></label>
+                <label>Contrast<input type="number" min="0" max="100" name="contrast" value="{CONTRAST}"></label>
+            </div>
+            <div class="content">
+                <h1>Autres paramètres</h1>
+                <hr>
+                <label>Durée d'une capture (s)<input type="number" min="5" max="300" name="caplen" value="{CAPTURE_LENGTH}"></label>
+                <label>Palette de couleur
+                    <select name="cmap">
+                        <optgroup label="Classique">
+                            <option value="binary">Binaire</option>
+                            <option value="Blues">Bleu</option>
+                            <option value="Greens">Vert</option>
+                            <option value="Oranges" >Orange</option>
+                        </optgroup>
+                        <optgroup label="Haut contrast">
+                            <option value="copper">Cuivre</option>
+                            <option value="ocean">Ocean</option>
+                        </optgroup>
+                    </select>
+                </label>
+            </div>
+            <input id="submit"  type="submit" name="submit" value="Valider">
+        </form>
+    </div>
+</body>
+</html>
