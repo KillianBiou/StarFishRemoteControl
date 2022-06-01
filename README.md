@@ -66,5 +66,4 @@ SonarMode fetch data from the connected Starfish. It produces a CSV file every x
 
 ## Starfish Scanner
 
-Here is a schema that represent how the software work (In french)
-[DiagrameFonctionnement](https://user-images.githubusercontent.com/62405524/171411200-d506aaa3-1e42-44a2-ba1b-d59a2b29e480.png)
+Here is a schema that represent how the software work (In french) : ![DiagrameFonctionnement](https://user-images.githubusercontent.com/62405524/171411200-d506aaa3-1e42-44a2-ba1b-d59a2b29e480.png)
