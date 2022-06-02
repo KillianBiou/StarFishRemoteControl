@@ -1,3 +1,3 @@
 SonarMode/sqlite3.h -linguist-vendored
 SonarMode/sqlite3.c -linguist-vendored
-SonarMode/** linguist-vendored
+SonarMode/lib/** linguist-vendored
