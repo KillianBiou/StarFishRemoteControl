@@ -52,6 +52,7 @@ SonarMode fetch data from the connected Starfish. It produces a CSV file every x
 -   Samples : Number of samples on Port side
 -   Data : The *samples* values of the Port side
 <br>
+
 -   S : Letter to design Starboard side
 -   Contrast: Visualization value, contains the contrast value
 -   Gain : Visualization value, contains the gain to apply to the whole image.
