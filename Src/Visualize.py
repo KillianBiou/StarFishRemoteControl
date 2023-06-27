@@ -64,10 +64,14 @@ def calculatePalette(gain, contrast):
 # WARNING : if gain and contrast values are modified, the result may be wrong
 def extractVisualisationData(data):
     # We fetch the gain and contrast from the first line (See documentation for CSV format)
-    samples = int(data[0].split(",")[4])
-    contrast = float(data[0].split(",")[1])
-    gain = float(data[0].split(",")[2])
-    return (samples, contrast, gain)
+    try:
+        samples = int(data[0].split(",")[4])
+        contrast = float(data[0].split(",")[1])
+        gain = float(data[0].split(",")[2])
+        return (samples, contrast, gain)
+    except:        
+        return (-1, -1, -1)
+
 
 # This function save the given image to the given path
 def saveImage(img, path):
@@ -124,6 +128,10 @@ def mergeImages(img1, img2):
 def drawData(data):
     # We extract the contrast and gain and generate the color palette
     samples, contrast, gain = extractVisualisationData(data)
+
+    if(samples and contrast and gain == -1):
+        return (-1, -1)
+
     contrast = max(contrast, 1)
     calculatePalette(gain, contrast)
 
@@ -256,17 +264,21 @@ if __name__ == '__main__':
             print("Generating images for " + f)
             # Process the file
             data = readData(join(LOG_PATH, f))
+
             hasInterstingCluster, img = drawData(data)
-            if hasInterstingCluster:
-                saveImage(img, join(INTEREST_IMAGE_PATH, f.replace(".csv", ".png").lstrip('treated')))
-
-                sqliteConnection.execute(f"UPDATE RuntimeVariable SET value = '/images/interestClusters/{f.replace('.csv', '.png').replace('record', 'cord').lstrip('treated')}' WHERE name = 'lastImagePath'")
+            if(hasInterstingCluster == -1):
+                print(f"Error while generating, skipping !\n")
             else:
-                saveImage(img, join(NON_INTEREST_IMAGE_PATH, f.replace(".csv", ".png").lstrip('treated')))
-                sqliteConnection.execute(f"UPDATE RuntimeVariable SET value = '/images/nonInterestClusters/{f.replace('.csv', '.png').replace('record', 'cord').lstrip('treated')}' WHERE name = 'lastImagePath'")
-            sqliteConnection.commit()
+                if hasInterstingCluster:
+                    saveImage(img, join(INTEREST_IMAGE_PATH, f.replace(".csv", ".png").lstrip('treated')))
 
-            print(f"{f.replace('.csv', '.png').lstrip('treated')} generated !\n")
+                    sqliteConnection.execute(f"UPDATE RuntimeVariable SET value = '/images/interestClusters/{f.replace('.csv', '.png').replace('record', 'cord').lstrip('treated')}' WHERE name = 'lastImagePath'")
+                else:
+                    saveImage(img, join(NON_INTEREST_IMAGE_PATH, f.replace(".csv", ".png").lstrip('treated')))
+                    sqliteConnection.execute(f"UPDATE RuntimeVariable SET value = '/images/nonInterestClusters/{f.replace('.csv', '.png').replace('record', 'cord').lstrip('treated')}' WHERE name = 'lastImagePath'")
+                sqliteConnection.commit()
+
+                print(f"{f.replace('.csv', '.png').lstrip('treated')} generated !\n")
         # We sleep to avoid consuming too much CPU and battery
         time.sleep(1)
     print("Done")
